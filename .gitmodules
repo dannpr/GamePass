@@ -4,3 +4,6 @@
 [submodule "gpkit/lib/modulekit"]
 	path = gpkit/lib/modulekit
 	url = https://github.com/rhinestonewtf/modulekit
+[submodule "module-template/lib/modulekit"]
+	path = module-template/lib/modulekit
+	url = https://github.com/rhinestonewtf/modulekit
