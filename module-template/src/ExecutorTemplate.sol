@@ -5,9 +5,10 @@ import { ERC7579ExecutorBase } from "modulekit/Modules.sol";
 import { IERC7579Account } from "modulekit/Accounts.sol";
 import { ModeLib } from "erc7579/lib/ModeLib.sol";
 
+// Create a escrow of funds for a specific game
 contract ExecutorTemplate is ERC7579ExecutorBase {
     /*//////////////////////////////////////////////////////////////////////////
-                                     CONFIG
+                                    CONFIG
     //////////////////////////////////////////////////////////////////////////*/
 
     /* Initialize the module with the given data

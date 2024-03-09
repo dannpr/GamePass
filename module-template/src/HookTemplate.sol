@@ -3,6 +3,7 @@ pragma solidity ^0.8.23;
 
 import { ERC7579HookBase } from "modulekit/modules/ERC7579HookBase.sol";
 
+// A hook that can be used when a winner is declared to withdraw the funds through an executor 
 contract HookTemplate is ERC7579HookBase {
     /*//////////////////////////////////////////////////////////////////////////
                                      CONFIG

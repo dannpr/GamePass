@@ -1,40 +1,84 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import { ERC7579ValidatorBase } from "modulekit/Modules.sol";
-import { PackedUserOperation } from "modulekit/external/ERC4337.sol";
+import {ERC7579ValidatorBase, ERC7579HookBase} from "modulekit/Modules.sol";
+import {PackedUserOperation} from "modulekit/external/ERC4337.sol";
 
-contract ValidatorTemplate is ERC7579ValidatorBase {
+// Validate a transaction with an already created escrow for a specific game
+contract ValidatorTemplate is ERC7579HookBase, ERC7579ValidatorBase {
     /*//////////////////////////////////////////////////////////////////////////
                                     CONSTANTS
     //////////////////////////////////////////////////////////////////////////*/
 
+    // Escrow contract address
+    address public immutable ESCROW =
+        0x0000000000000000000000000000000000000000;
+
+    struct UserDeposit {
+        uint256 amount;
+        address token;
+        address ESCROW;
+    }
+
+    mapping(address => UserDeposit) private userAmountEscrow;
+
     /*//////////////////////////////////////////////////////////////////////////
-                                     CONFIG
+                                    CONFIG
     //////////////////////////////////////////////////////////////////////////*/
 
     /**
      * Initialize the module with the given data
      * @param data The data to initialize the module with
      */
-    function onInstall(bytes calldata data) external override { }
+    function onInstall(bytes calldata data) external override {
+        if (data.length == 0) {
+            revert("ValidatorTemplate: data is empty");
+        }
+        (uint256 amount, address token, address escrow) = abi.decode(
+            data,
+            (uint256, address, address)
+        );
+        UserDeposit storage depositAmount = userAmountEscrow[msg.sender];
+
+        depositAmount.amount = amount;
+        depositAmount.token = token;
+        depositAmount.ESCROW = escrow;
+    }
 
     /**
      * De-initialize the module with the given data
      * @param data The data to de-initialize the module with
      */
-    function onUninstall(bytes calldata data) external override { }
+    function onUninstall(bytes calldata data) external override {
+        if (userAmountEscrow[msg.sender].amount > 0) {
+            revert("ValidatorTemplate: deposit amount is not 0");
+        }
+        delete userAmountEscrow[msg.sender];
+    }
 
     /**
      * Check if the module is initialized
      * @param smartAccount The smart account to check
      * @return true if the module is initialized, false otherwise
      */
-    function isInitialized(address smartAccount) external view returns (bool) { }
+    function isInitialized(address smartAccount) external view returns (bool) {}
 
     /*//////////////////////////////////////////////////////////////////////////
-                                     MODULE LOGIC
+                                    MODULE LOGIC
     //////////////////////////////////////////////////////////////////////////*/
+
+    function preCheck(
+        address msgSender,
+        bytes calldata msgData
+    ) external override returns (bytes memory hookData) {
+        hookData = abi.encode(true);
+    }
+
+    function postCheck(
+        bytes calldata hookData
+    ) external override returns (bool success) {
+        (success) = abi.decode(hookData, (bool));
+    }
 
     /**
      * Validates PackedUserOperation
@@ -49,12 +93,9 @@ contract ValidatorTemplate is ERC7579ValidatorBase {
     function validateUserOp(
         PackedUserOperation calldata userOp,
         bytes32 userOpHash
-    )
-        external
-        view
-        override
-        returns (ValidationData)
-    {
+    ) external view override returns (ValidationData) {
+        // verify the signature with the user value
+
         return ValidationData.wrap(0);
     }
 
@@ -71,13 +112,7 @@ contract ValidatorTemplate is ERC7579ValidatorBase {
         address sender,
         bytes32 hash,
         bytes calldata signature
-    )
-        external
-        view
-        virtual
-        override
-        returns (bytes4 sigValidationResult)
-    {
+    ) external view virtual override returns (bytes4 sigValidationResult) {
         return EIP1271_FAILED;
     }
 
@@ -106,7 +141,9 @@ contract ValidatorTemplate is ERC7579ValidatorBase {
      * @param typeID The type ID to check
      * @return true if the module is of the given type, false otherwise
      */
-    function isModuleType(uint256 typeID) external pure override returns (bool) {
-        return typeID == TYPE_VALIDATOR;
+    function isModuleType(
+        uint256 typeID
+    ) external pure override returns (bool) {
+        return typeID == TYPE_HOOK;
     }
 }
