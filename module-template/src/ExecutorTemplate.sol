@@ -3,6 +3,7 @@ pragma solidity ^0.8.23;
 
 import { ERC7579ExecutorBase } from "modulekit/Modules.sol";
 import { IERC7579Account } from "modulekit/Accounts.sol";
+import { IERC4626 } from "forge-std/interfaces/IERC4626.sol";
 import { ModeLib } from "erc7579/lib/ModeLib.sol";
 
 // Create a escrow of funds for a specific game
