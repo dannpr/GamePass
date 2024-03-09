@@ -1,2 +1,2 @@
 # GamePass
-Kit to integrate the game Pass ecosystem to unlock Web3 gaming
+Kit to integrate the game Pass to open Esport Onchain gaming
