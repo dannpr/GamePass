@@ -7,3 +7,6 @@
 [submodule "module-template/lib/modulekit"]
 	path = module-template/lib/modulekit
 	url = https://github.com/rhinestonewtf/modulekit
+[submodule "module-template/lib/openzeppelin-contracts"]
+	path = module-template/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
