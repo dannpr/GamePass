@@ -27,7 +27,7 @@ After the deposit is done it's stored on the flare chain and the winner data wil
 
 PowerPoint:
 
-[https://docs.google.com/presentation/d/18F4v7dttay4icrk-lXDBMCEBKE6EgpOiWNz3XInLmv4/edit?usp=sharing](https://docs.google.com/presentation/d/18F4v7dttay4icrk-lXDBMCEBKE6EgpOiWNz3XInLmv4/edit?usp=sharing)
+![GamePass Flow](/GamePassFlow.png)
 
 Discord: Dannprinc#2842
 X : @princdann
