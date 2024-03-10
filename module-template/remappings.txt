@@ -15,4 +15,3 @@ solarray/=node_modules/solarray/src/
 @prb/math/=node_modules/@prb/math/
 erc4337-validation/=node_modules/erc4337-validation/src/
 @safe-global/=node_modules/@safe-global/
-@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/

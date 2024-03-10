@@ -3,7 +3,7 @@ import "dotenv/config";
 
 import { TransactionResponse } from "ethers";
 import hardhat, { ethers } from "hardhat";
-import { requestVerification, sleep } from "../../lib/utils";
+import { requestVerification, sleep } from "../lib/utils";
 import {
   EthereumPaymentCollectorContract,
   FallbackContractContract,

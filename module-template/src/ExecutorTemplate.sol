@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {ERC7579ExecutorBase} from "modulekit/Modules.sol";
-import {IERC7579Account} from "modulekit/Accounts.sol";
+import {ERC7579ExecutorBase} from "modulekit/modules/ERC7579ExecutorBase.sol";
+import {IERC7579Account} from "erc7579/interfaces/IERC7579Account.sol";
 import {ModeLib} from "erc7579/lib/ModeLib.sol";
 import {ExecutionLib} from "erc7579/lib/ExecutionLib.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20} from "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // Create a escrow of funds for a specific game
 contract ExecutorTemplate is ERC7579ExecutorBase {
