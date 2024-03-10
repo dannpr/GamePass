@@ -25,7 +25,9 @@ After the deposit is done it's stored on the flare chain and the winner data wil
 
 [GamePass Transaction storing](https://github.com/dannpr/GamePass/blob/main/flare-demo-examples/scripts/GamePassTransaction.ts)
 
-PowerPoint:
+## Documentations
+
+[Presentation](https://www.canva.com/design/DAF_HrCqWdk/J-qVSZAlFoWiqGz9HmFJMg/edit?utm_content=DAF_HrCqWdk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ![GamePass Flow](/GamePassFlow.png)
 
