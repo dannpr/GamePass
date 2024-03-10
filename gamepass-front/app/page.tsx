@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Input, Link, Slider } from "@nextui-org/react";
+import { Button, CircularProgress, Input, Link, Slider } from "@nextui-org/react";
 import Image from "next/image";
 
 import { useEffect, useState } from "react";
@@ -53,7 +53,7 @@ export default function Home() {
 							aria-label="Temperature"
 							className="max-w-md my-4"
 						/>
-						<Link href="dashboard" className="w-full justify-center"><Button className="text-white bg-indigo-400">Create a profile</Button></Link>
+						<Link href="dashboard" className="w-full justify-center"><Button className="text-white bg-indigo-400">Play</Button></Link>
 					</div>
 				)}
 			</div>
