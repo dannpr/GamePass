@@ -10,3 +10,6 @@
 [submodule "module-template/lib/openzeppelin-contracts"]
 	path = module-template/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "flare-demo-examples/lib/forge-std"]
+	path = flare-demo-examples/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
