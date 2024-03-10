@@ -4,9 +4,24 @@ pragma solidity ^0.8.23;
 import {ERC7579ExecutorBase} from "modulekit/Modules.sol";
 import {IERC7579Account} from "modulekit/Accounts.sol";
 import {ModeLib} from "erc7579/lib/ModeLib.sol";
+import {ExecutionLib} from "erc7579/lib/ExecutionLib.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // Create a escrow of funds for a specific game
 contract ExecutorTemplate is ERC7579ExecutorBase {
+    /*//////////////////////////////////////////////////////////////////////////
+                                    EVENTS
+    //////////////////////////////////////////////////////////////////////////*/
+
+    event GameInitiated(
+        uint gameUID,
+        address[] gamers,
+        address token,
+        uint256 amount
+    );
+
+    event GameDome(uint gameUID, address winner);
+
     /*//////////////////////////////////////////////////////////////////////////
                             CONSTANTS & STORAGE
     //////////////////////////////////////////////////////////////////////////*/
@@ -15,7 +30,6 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
     struct ExecutionConfig {
         uint gameUID;
         address winner;
-        address executor;
     }
 
     // Game initiation config
@@ -56,7 +70,7 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
         uint gameUID,
         GameInitiationCongif memory config
     ) public {
-        GameInitiationCongif existingConfig = getInitGameConfig(
+        GameInitiationCongif memory existingConfig = getInitGameConfig(
             msg.sender,
             gameUID
         );
@@ -69,17 +83,15 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
             revert("Game must have at least 2 players");
         }
 
-        if (config.amountMax < 0) {
+        if (config.amount == 0) {
             revert("Amount must be greater than 0");
-        }
-
-        if (config.executor == address(0)) {
-            revert("Executor must be set");
         }
 
         if (config.token == address(0)) {
             revert("Token must be set");
         }
+
+        emit GameInitiated(gameUID, config.gamers, config.token, config.amount);
 
         _config[msg.sender][gameUID] = config;
     }
@@ -94,9 +106,8 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
             uint gameUID,
             address[] memory gamers,
             address token,
-            uint256 amount,
-            address executor
-        ) = abi.decode(data, (uint, address[], address, uint256, address));
+            uint256 amount
+        ) = abi.decode(data, (uint, address[], address, uint256));
 
         // Set the config
         setInitConfig(
@@ -105,8 +116,7 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
                 gameUID: gameUID,
                 gamers: gamers,
                 token: token,
-                amount: amount,
-                executor: executor
+                amount: amount
             })
         );
     }
@@ -123,7 +133,7 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
     function isInitialized(address smartAccount) external view returns (bool) {}
 
     /*//////////////////////////////////////////////////////////////////////////
-                                 MODULE LOGIC
+                                MODULE LOGIC
     //////////////////////////////////////////////////////////////////////////*/
 
     /**
@@ -145,7 +155,7 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
             i < _config[executor.winner][executor.gameUID].gamers.length;
             i++
         ) {
-            smartGamersAccount = IERC7579Account(
+            IERC7579Account smartGamersAccount = IERC7579Account(
                 _config[executor.winner][executor.gameUID].gamers[i]
             );
 
@@ -164,6 +174,7 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
                 )
             );
         }
+        emit GameDome(executor.gameUID, executor.winner);
     }
 
     /*//////////////////////////////////////////////////////////////////////////
@@ -183,7 +194,7 @@ contract ExecutorTemplate is ERC7579ExecutorBase {
      * @return version The version of the module
      */
     function version() external pure returns (string memory) {
-        return "0.0.1";
+        return "0.3.7";
     }
 
     /*
