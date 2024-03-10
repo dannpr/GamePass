@@ -4,7 +4,7 @@ The Next Generation of web3 gaming.
 
 ## Enabling an Easy web3 onbaording for E-Sport gamers
 
-Instead of create web3 native game, why don't we create a layer on top of E-sport focus games like battle royal. GamePass add a new way to incentivize gamers and Events organisers by creating a new way to participate in competitions or Sticy games with friends.
+Instead of create web3 native game, why don't we create a layer on top of E-sport focus games like battle royal. GamePass add a new way to incentivize gamers and Events organisers by creating a new way to participate in competitions or spicy games with friends.
 
 You can see the flow and integrations below :
 
