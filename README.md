@@ -23,7 +23,7 @@ Then they'll download the GamePass modular kit to participate in the game by dep
 
 After the deposit is done it's stored on the flare chain and the winner data will be store there too so when the winner would want to get the prize, that is the sum of all of the deposit of the loosers. The data will be verifiable.
 
-[GamePass Transaction storing](https://github.com/dannpr/GamePass/blob/main/flare-demo-examples/scripts/GamePassTransaction.ts)
+GamePass Transaction storing (Didn't have the time to do it well)
 
 ## Documentations
 
